@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import './images/flash.jpg';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactPlayer from 'react-player';
+import PlayerSelection from './PlayerSelection';
 
 class App extends Component {
     
@@ -13,12 +15,13 @@ class App extends Component {
         super(props);
         this.state = {
             playing: null,
-            btnText: ''
+            btnText: 'Loading...'
         };
     }
     
     componentDidMount(){
-        this.play();
+//        this.play();
+        this.pause();
     }
     
     handleClick(){
@@ -51,7 +54,7 @@ class App extends Component {
                 </p>
                 <ReactPlayer url='https://youtu.be/_2zM7KBG_rQ' playing={ this.state.playing ? true : false } height='0' />
                 <RaisedButton label={ this.state.btnText } onClick={ this.handleClick.bind(this) }/>
-                
+                <PlayerSelection />
             </div>
         </MuiThemeProvider>
     );
