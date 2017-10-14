@@ -2,88 +2,104 @@ import React, { Component } from 'react';
 import './App.css';
 //import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
-import {Card, CardHeader } from 'material-ui/Card';
-import flashImg from './images/flash.jpg';
-
+import { Card } from 'material-ui/Card';
+//import flashImg from './images/flash.jpg';
+import Checkbox from 'material-ui/Checkbox';
+import ActionFavorite from 'material-ui/svg-icons/navigation/check';
+import ActionFavoriteBorder from 'material-ui/svg-icons/social/person-add';
+import Character from './Character.jsx';
 
 const style = {
     height: 100,
     width: 250,
     margin: 20,
     textAlign: 'center',
-    display: 'inline-block',
+    display: 'inline-block'
 };
 
-const bioStyle = {
-    fontSize: '10px'
+//const listItems = numbers.map((numbers) => {
+//    return(
+//            <Paper style={style} zDepth={1}> 
+//                <Card>
+//                    <Character/>
+//                    <p>{numbers}</p>
+//                    <Checkbox
+//                      checkedIcon={<ActionFavorite />}
+//                      uncheckedIcon={<ActionFavoriteBorder />}
+//                      label= 'Woo!'
+//                      onCheck={ this.boxChecked.bind(this) }/>
+//                </Card>
+//            </Paper>
+//);
+//}
+            
+const NumbersList = (props) => {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =>
+    // Correct! Key should be specified inside the array.
+    <input key={number.toString()}
+              value={number} />
+
+  );
+  return (
+    <ul>
+      {listItems}
+    </ul>
+  );
 }
 
-
-const Player = ({name}) => {
-    let desc = '';
-    let img = null;
-    
-    if(name === 'Ox Bellows'){
-        desc = "Height: 6'4, Weight: 288 lbs, Hobbies: Football, Shiny Objects, Birthday: October 18th";
-        img = flashImg;
-    }
-    
-    return(
-        <Paper style={style} zDepth={1}> 
-            <Card>
-                <CardHeader 
-                    title={name} 
-                    subtitle={desc} 
-                    avatar={img} 
-                    subtitleStyle={bioStyle}/>
-            </Card>
-        </Paper>
-    );
-}
-
-const PlayerSelection = () => (
-  <div>
-    <Player name='Ox Bellows'/>
-    <Player name='Ox Bellows'/>
-    <Player name='Ox Bellows'/>
-    <Player name='Ox Bellows'/>
-    <Player name='Ox Bellows'/>
-    <Player name='Ox Bellows'/>
-  </div>
-);
-
-class PlayerSelectionBackup extends Component {
+                            
+class PlayerSelection extends Component {
     
     constructor(props) {
         super(props);
         this.state = {
-            playing: null,
-            btnText: ''
-        };
+            playerCount: 0
+        }
     }
     
     componentDidMount(){
-        this.play();
+        console.log('Player Selection Ready.')
     }
     
-    handleClick(){
-        // toggle music
-        this.state.playing ? this.pause() : this.play();
+    updateCount (bool) {
+        console.log('well this works well..' + bool);
+        if(bool){
+            let count = this.state.playerCount+1;
+            this.setState({playerCount:count});         
+        }else {
+            let count = this.state.playerCount-1;
+            this.setState({playerCount:count});
+        }
     }
     
-    play(){
-        this.setState({ playing: true });
-        this.setState({ btnText: 'Pause' });
+    // slight problem with this approach, may need control inside the checkbox to change label
+    boxChecked = (event, value) => {   
+        this.updateCount(value)
     }
     
-    pause(){
-        this.setState({ playing: false });
-        this.setState({ btnText: 'Play' });
-    }
+
+  
     
   render() {
     return (
-        <h3>Select a Player!</h3>
+        <div>
+            <p>{this.state.playerCount} Player(s) Selected</p>
+            
+            <Paper style={style} zDepth={1}> 
+                <Card>
+                    <Character/>
+                    <Checkbox
+                      checkedIcon={<ActionFavorite />}
+                      uncheckedIcon={<ActionFavoriteBorder />}
+                      label= 'Add / Remove Player'
+                      onCheck={ this.boxChecked.bind(this) }/>
+                </Card>
+            </Paper>
+
+            <NumbersList numbers={ [1, 2, 3, 4, 5] }></NumbersList>
+ 
+        </div>
     );
   }
 }
