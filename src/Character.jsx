@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Paper from 'material-ui/Paper';
 import { CardHeader } from 'material-ui/Card';
-import WilliamsAvatar from './assets/Darwin Flash Williams.png';
 import HeroData from './assets/HeroData.json';
 import { Card } from 'material-ui/Card';
 import ActionFavorite from 'material-ui/svg-icons/navigation/check';
@@ -12,7 +11,7 @@ import Checkbox from 'material-ui/Checkbox';
 window.id=0;
 
 const bioStyle = {
-    fontSize: '10px'
+    fontSize: '0.8em'
 }
 
 const boxStyle = {
@@ -21,42 +20,68 @@ const boxStyle = {
     paddingBottom:'8px'
 }
 
-const HeroCard = ({data, fn}) => {
+const imgStyle = {
+    float:'left',
+    marginTop: '20px',
+    marginLeft: '20px'
+}
+
+const HeroCard = ({data, fn, pic}) => {
+        
+    const processCheck = (value) => {
+        console.log(value)
+        fn(value);
+    }
+
+    const onCheck = (e, checked) => {
+      processCheck(e.target.checked)  
+    } 
+    
     return (
-        <Paper>
         <Card>
-            <p>{data.Name}</p>
-            <p>{data.Age}</p>
-            <p>{data.Weight}</p>
-            <p>{data.Height}</p>
-            <p>{data.Hobbies}</p>
-            <p>{data.Birthday}</p>
-        </Card>
-        <Checkbox checkedIcon={<ActionFavorite />}
+            <img src={ pic } alt="" height="100" width="100" style={imgStyle}/>
+            <CardHeader
+              title={data.Name}
+              subtitle={'Birthday:' + data.Birthday}
+            />
+            <span>Age:{data.Age}, Weight: {data.Weight}, Height {data.Height}</span>
+            <span>Hobbies: {data.Hobbies}</span>
+            <Checkbox 
+            checkedIcon={<ActionFavorite />}
             uncheckedIcon={<ActionFavoriteBorder />}
-            onCheck={ fn }
-            style={boxStyle} />
-        </Paper>
+            onCheck={ onCheck }
+            style={ boxStyle } />
+        </Card>
     )
 }
 
 
-const HeroList = ({data}) => {
+const HeroList = ({data, fn}) => {
+    // dynamically import all images in directory
+    const importPics = (r) => {
+        let images = {};
+        r.keys().map((item, index) => {
+            images[item.replace('./', '')] = r(item);
+        });
+        return images;
+    }
+    let images = importPics(require.context('./assets', false, /\.(png)$/));
+
     const nodes = data.map((HeroData) => {
-        return(<HeroCard key={window.id++} data={HeroData} />);
+        return(<HeroCard key={window.id++} data={HeroData} fn={fn} pic={images[HeroData.Name + '.png']} />);
     })
     
     return(
-        <div style={bioStyle}>{nodes}<br/></div>
+        <div style={bioStyle}>{nodes}</div>
     )
 }
 
 class AllCharacters extends Component {
-    
     constructor(props) {
         super(props);
-        console.log(props)
-        this.state = {};
+        this.state = {
+            images: []
+        };
         this.HeroData = HeroData;
         this.callbackFromParent = props.callbackFromParent;
     }
@@ -67,11 +92,9 @@ class AllCharacters extends Component {
         
     render() {
       return (
-          <HeroList data={this.HeroData} fn={this.callbackFromParent}></HeroList>
+          <HeroList data={this.HeroData} fn={this.callbackFromParent}/>
       )
-    
     }
-    
 }
 
 export default AllCharacters;

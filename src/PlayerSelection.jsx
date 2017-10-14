@@ -31,6 +31,7 @@ class PlayerSelection extends Component {
         this.state = {
             playerCount: 0
         }
+        this.updateCount = this.updateCount.bind(this);
     }
     
     componentDidMount(){
@@ -46,18 +47,13 @@ class PlayerSelection extends Component {
             this.setState({playerCount:count});
         }
     }
-    
-    // slight problem with this approach, may need control inside the checkbox to change label
-    boxChecked = (event, value) => {
-        console.log('omg amaizn')
-        this.updateCount(value)
-    }
+
 
   render() {
     return (
         <div>
             <p>{this.state.playerCount} Player(s) Selected</p>
-            <AllCharacters callbackFromParent={this.boxChecked}/>
+            <AllCharacters callbackFromParent={this.updateCount}/>
         </div>
     );
   }
