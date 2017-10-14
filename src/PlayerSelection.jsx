@@ -17,34 +17,32 @@ const style = {
     display: 'inline-block'
 };
 
-//const listItems = numbers.map((numbers) => {
-//    return(
-//            <Paper style={style} zDepth={1}> 
-//                <Card>
-//                    <Character/>
-//                    <p>{numbers}</p>
-//                    <Checkbox
-//                      checkedIcon={<ActionFavorite />}
-//                      uncheckedIcon={<ActionFavoriteBorder />}
-//                      label= 'Woo!'
-//                      onCheck={ this.boxChecked.bind(this) }/>
-//                </Card>
-//            </Paper>
-//);
-//}
-            
-const NumbersList = (props) => {
-  const numbers = props.numbers;
-  const listItems = numbers.map((number) =>
-    // Correct! Key should be specified inside the array.
-    <input key={number.toString()}
-              value={number} />
+const boxStyle = {
+    width:30,
+    margin:'0 auto',
+    paddingBottom:'8px'
+}
 
-  );
+
+const HeroList = (props) => {
+  const numbers = props.numbers;
+  const boxChecked = (e, value) => {
+      console.log(e.currentTarget.id);
+  }
+  const listItems = numbers.map((number) =>
+        <Paper style={style} zDepth={1} key={number}>
+            <Card>
+                <Character/>
+            </Card>
+            <Checkbox checkedIcon={<ActionFavorite />}
+                      uncheckedIcon={<ActionFavoriteBorder />}
+                      onCheck={ boxChecked.bind(this) }
+                      style={boxStyle}
+                      id={ 'Hero_' + number } />
+        </Paper>
+    );
   return (
-    <ul>
-      {listItems}
-    </ul>
+    <div>{listItems}</div>
   );
 }
 
@@ -63,7 +61,6 @@ class PlayerSelection extends Component {
     }
     
     updateCount (bool) {
-        console.log('well this works well..' + bool);
         if(bool){
             let count = this.state.playerCount+1;
             this.setState({playerCount:count});         
@@ -74,31 +71,15 @@ class PlayerSelection extends Component {
     }
     
     // slight problem with this approach, may need control inside the checkbox to change label
-    boxChecked = (event, value) => {   
+    boxChecked = (event, value) => {
         this.updateCount(value)
     }
-    
 
-  
-    
   render() {
     return (
         <div>
             <p>{this.state.playerCount} Player(s) Selected</p>
-            
-            <Paper style={style} zDepth={1}> 
-                <Card>
-                    <Character/>
-                    <Checkbox
-                      checkedIcon={<ActionFavorite />}
-                      uncheckedIcon={<ActionFavoriteBorder />}
-                      label= 'Add / Remove Player'
-                      onCheck={ this.boxChecked.bind(this) }/>
-                </Card>
-            </Paper>
-
-            <NumbersList numbers={ [1, 2, 3, 4, 5] }></NumbersList>
- 
+            <HeroList numbers={ [1, 2, 3, 4, 5] }></HeroList>
         </div>
     );
   }
