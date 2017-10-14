@@ -14,18 +14,41 @@ const style = {
     display: 'inline-block',
 };
 
+const bioStyle = {
+    fontSize: '10px'
+}
+
+
+const Player = ({name}) => {
+    let desc = '';
+    let img = null;
+    
+    if(name === 'Ox Bellows'){
+        desc = "Height: 6'4, Weight: 288 lbs, Hobbies: Football, Shiny Objects, Birthday: October 18th";
+        img = flashImg;
+    }
+    
+    return(
+        <Paper style={style} zDepth={1}> 
+            <Card>
+                <CardHeader 
+                    title={name} 
+                    subtitle={desc} 
+                    avatar={img} 
+                    subtitleStyle={bioStyle}/>
+            </Card>
+        </Paper>
+    );
+}
 
 const PlayerSelection = () => (
   <div>
-        <Paper style={style} zDepth={1}> 
-          <Card>
-            <CardHeader
-              title="Ox Bellows"
-              subtitle="Height: 6'4, Weight: 288 lbs, Hobbies: Football, Shiny Objects, Birthday: October 18th"
-              avatar={flashImg}
-            />
-          </Card>
-        </Paper>
+    <Player name='Ox Bellows'/>
+    <Player name='Ox Bellows'/>
+    <Player name='Ox Bellows'/>
+    <Player name='Ox Bellows'/>
+    <Player name='Ox Bellows'/>
+    <Player name='Ox Bellows'/>
   </div>
 );
 

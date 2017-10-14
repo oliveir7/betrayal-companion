@@ -1,0 +1,12 @@
+{
+    characters: [
+        { 
+            name: 'character one',
+            bio: 'something somethin something'
+        },
+        {
+            name: 'character two',
+            bio: 'idk man'
+        }
+    ]
+}

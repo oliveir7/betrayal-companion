@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
 import './images/flash.jpg';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
@@ -31,29 +31,26 @@ class App extends Component {
     
     play(){
         this.setState({ playing: true });
-        this.setState({ btnText: 'Pause' });
+        this.setState({ btnText: 'Pause Music' });
     }
     
     pause(){
         this.setState({ playing: false });
-        this.setState({ btnText: 'Play' });
+        this.setState({ btnText: 'Play Music' });
     }
     
   render() {
     return (
-        <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+        <MuiThemeProvider muiTheme={ getMuiTheme(darkBaseTheme) }>
             <div className="App">
                 <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <h1 className="App-title">Welcome to React</h1>
-                    
+                    <h1 className="App-title">Betrayal at the House on the Hill Companion App</h1>
+                    <RaisedButton label={ this.state.btnText } onClick={ this.handleClick.bind(this) }/>
+                    <p className="App-intro">
+                        { this.state.playing ? 'Now Playing... Treacherous Mansion from Luigi\'s Mansion Dark Moon' : null } 
+                    </p>
+                    <ReactPlayer url='https://youtu.be/_2zM7KBG_rQ' playing={ this.state.playing ? true : false } height='0' />
                 </header>
-                <p className="App-intro">
-                    { this.state.playing ? 'Now Playing:' : 'Paused: '} 
-                    Treacherous Mansion from Luigi's Mansion Dark Moon
-                </p>
-                <ReactPlayer url='https://youtu.be/_2zM7KBG_rQ' playing={ this.state.playing ? true : false } height='0' />
-                <RaisedButton label={ this.state.btnText } onClick={ this.handleClick.bind(this) }/>
                 <PlayerSelection />
             </div>
         </MuiThemeProvider>
