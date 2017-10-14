@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Paper from 'material-ui/Paper';
 import { CardHeader } from 'material-ui/Card';
-import flashImg from './images/flash.jpg';
-
+import WilliamsAvatar from './assets/Darwin Flash Williams.png';
 
 const bioStyle = {
     fontSize: '10px'
@@ -17,7 +16,7 @@ class Character extends Component {
             name: "Flash Williams",
             desc: "Height: 6'4, Weight: 288 lbs, Birthday: October 18th",
             btnText: 'Add Player',
-            img: flashImg
+            img: WilliamsAvatar
         };
     }
     

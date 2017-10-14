@@ -79,7 +79,7 @@ class PlayerSelection extends Component {
     return (
         <div>
             <p>{this.state.playerCount} Player(s) Selected</p>
-            <HeroList numbers={ [1, 2, 3, 4, 5] }></HeroList>
+            <HeroList callbackFromParent={this.updateCount} numbers={ [1, 2, 3, 4, 5] }></HeroList>
         </div>
     );
   }
