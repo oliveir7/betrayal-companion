@@ -7,6 +7,7 @@ import { Card } from 'material-ui/Card';
 import ActionFavorite from 'material-ui/svg-icons/navigation/check';
 import ActionFavoriteBorder from 'material-ui/svg-icons/social/person-add';
 import Checkbox from 'material-ui/Checkbox';
+import Grid from 'material-ui/Grid';
 
 window.id=0;
 
@@ -21,7 +22,6 @@ const boxStyle = {
 }
 
 const imgStyle = {
-    float:'left',
     marginTop: '20px',
     marginLeft: '20px'
 }
@@ -29,7 +29,7 @@ const imgStyle = {
 const HeroCard = ({data, fn, pic}) => {
         
     const processCheck = (value) => {
-        console.log(value)
+        console.log(value) 
         fn(value);
     }
 
@@ -38,20 +38,18 @@ const HeroCard = ({data, fn, pic}) => {
     } 
     
     return (
-        <Card>
+        <Grid item xs={2}>
             <img src={ pic } alt="" height="100" width="100" style={imgStyle}/>
-            <CardHeader
-              title={data.Name}
-              subtitle={'Birthday:' + data.Birthday}
-            />
-            <span>Age:{data.Age}, Weight: {data.Weight}, Height {data.Height}</span>
+            <p>{data.Name}</p>
+            <span>Age: {data.Age}, Birthday: {data.Birthday}</span>
+            <p> Weight: {data.Weight}, Height {data.Height}</p>
             <span>Hobbies: {data.Hobbies}</span>
             <Checkbox 
             checkedIcon={<ActionFavorite />}
             uncheckedIcon={<ActionFavoriteBorder />}
             onCheck={ onCheck }
             style={ boxStyle } />
-        </Card>
+        </Grid>
     )
 }
 
@@ -72,7 +70,7 @@ const HeroList = ({data, fn}) => {
     })
     
     return(
-        <div style={bioStyle}>{nodes}</div>
+        <Grid container spacing={24} style={bioStyle}>{nodes}</Grid>
     )
 }
 
@@ -92,7 +90,8 @@ class AllCharacters extends Component {
         
     render() {
       return (
-          <HeroList data={this.HeroData} fn={this.callbackFromParent}/>
+          
+            <HeroList data={this.HeroData} fn={this.callbackFromParent}/>
       )
     }
 }
