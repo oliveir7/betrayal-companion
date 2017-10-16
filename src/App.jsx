@@ -45,11 +45,13 @@ class App extends Component {
                 <header className="App-header">
                     <h1 className="App-title">Betrayal at the House on the Hill Companion App</h1>
                     <RaisedButton label={ this.state.btnText } onClick={ this.handleClick.bind(this) }/>
+                    
                     <p className="App-intro">
                         { this.state.playing ? 'Now Playing... Treacherous Mansion from Luigi\'s Mansion Dark Moon' : null } 
                     </p>
                     <ReactPlayer url='https://youtu.be/_2zM7KBG_rQ' playing={ this.state.playing ? true : false } height='0' />
                 </header>
+
                 <PlayerSelection />
             </div>
         </MuiThemeProvider>

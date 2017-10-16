@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
-import Paper from 'material-ui/Paper';
-import { CardHeader } from 'material-ui/Card';
+//import Paper from 'material-ui/Paper';
+//import { CardHeader } from 'material-ui/Card';
 import HeroData from './assets/HeroData.json';
-import { Card } from 'material-ui/Card';
-import ActionFavorite from 'material-ui/svg-icons/navigation/check';
-import ActionFavoriteBorder from 'material-ui/svg-icons/social/person-add';
-import Checkbox from 'material-ui/Checkbox';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+//import { Card } from 'material-ui/Card';
+//import ActionFavorite from 'material-ui/svg-icons/navigation/check';
+//import ActionFavoriteBorder from 'material-ui/svg-icons/social/person-add';
+//import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Grid, Row, Col } from 'react-flexbox-grid';
+
 
 window.id=0;
 
@@ -16,11 +17,11 @@ const bioStyle = {
     fontSize: '0.8em'
 }
 
-const boxStyle = {
-    width:30,
-    margin:'0 auto',
-    paddingBottom:'8px'
-}
+//const boxStyle = {
+//    width:30,
+//    margin:'0 auto',
+//    paddingBottom:'8px'
+//}
 
 const imgStyle = {
     marginTop: '20px',
@@ -28,16 +29,17 @@ const imgStyle = {
 }
 
 const HeroCard = ({data, fn, pic}) => {
-        
-    const processCheck = (value) => {
-        console.log(value)
-        fn(value);
-    }
-
-    const onCheck = (e, checked) => {
-      processCheck(e.target.checked)  
-    } 
+    let toggler = false;
     
+//    const processCheck = (value) => {
+//        console.log(value)
+//        fn(value);
+//    }
+
+    const onCheck = (e) => {
+      toggler = !toggler
+    } 
+    // TODO: this may need to be its own class, i think setting state is the reason why this wont update.
     return (
         <Col xs={4} sm={2}>
             <img src={ pic } alt="" height="100" width="100" style={imgStyle}/>
@@ -45,7 +47,7 @@ const HeroCard = ({data, fn, pic}) => {
             <p>Age: {data.Age}, Birthday: {data.Birthday}</p>
             <p>Weight: {data.Weight}, Height {data.Height}</p>
             <p>Hobbies: {data.Hobbies}</p>
-
+            <RaisedButton label={toggler ? 'Remove' : 'Select'} onClick={onCheck} />
         </Col>
     )
 }
@@ -69,11 +71,6 @@ const HeroList = ({data, fn}) => {
     return(
         <Grid fluid style={bioStyle}>
             <Row>{nodes}</Row>
-                        <RaisedButton
-              href="https://github.com/callemall/material-ui"
-              target="_blank"
-              label="Github Link"
-              icon={ActionFavoriteBorder} />
         </Grid>
     )
 }
