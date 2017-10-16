@@ -7,6 +7,8 @@ import { Card } from 'material-ui/Card';
 import ActionFavorite from 'material-ui/svg-icons/navigation/check';
 import ActionFavoriteBorder from 'material-ui/svg-icons/social/person-add';
 import Checkbox from 'material-ui/Checkbox';
+import { Grid, Row, Col } from 'react-flexbox-grid';
+import RaisedButton from 'material-ui/RaisedButton';
 
 window.id=0;
 
@@ -21,7 +23,6 @@ const boxStyle = {
 }
 
 const imgStyle = {
-    float:'left',
     marginTop: '20px',
     marginLeft: '20px'
 }
@@ -38,20 +39,14 @@ const HeroCard = ({data, fn, pic}) => {
     } 
     
     return (
-        <Card>
+        <Col xs={4} sm={2}>
             <img src={ pic } alt="" height="100" width="100" style={imgStyle}/>
-            <CardHeader
-              title={data.Name}
-              subtitle={'Birthday:' + data.Birthday}
-            />
-            <span>Age:{data.Age}, Weight: {data.Weight}, Height {data.Height}</span>
-            <span>Hobbies: {data.Hobbies}</span>
-            <Checkbox 
-            checkedIcon={<ActionFavorite />}
-            uncheckedIcon={<ActionFavoriteBorder />}
-            onCheck={ onCheck }
-            style={ boxStyle } />
-        </Card>
+            <p>{data.Name}</p>
+            <p>Age: {data.Age}, Birthday: {data.Birthday}</p>
+            <p>Weight: {data.Weight}, Height {data.Height}</p>
+            <p>Hobbies: {data.Hobbies}</p>
+
+        </Col>
     )
 }
 
@@ -72,7 +67,14 @@ const HeroList = ({data, fn}) => {
     })
     
     return(
-        <div style={bioStyle}>{nodes}</div>
+        <Grid fluid style={bioStyle}>
+            <Row>{nodes}</Row>
+                        <RaisedButton
+              href="https://github.com/callemall/material-ui"
+              target="_blank"
+              label="Github Link"
+              icon={ActionFavoriteBorder} />
+        </Grid>
     )
 }
 
