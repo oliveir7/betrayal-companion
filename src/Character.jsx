@@ -8,6 +8,10 @@ import HeroData from './assets/HeroData.json';
 //import ActionFavoriteBorder from 'material-ui/svg-icons/social/person-add';
 //import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
+import Slider from 'rc-slider';
+//import Badge from 'material-ui/Badge';
+import Healing from 'material-ui/svg-icons/image/healing';
+import IconButton from 'material-ui/IconButton';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 
 
@@ -28,26 +32,65 @@ const imgStyle = {
     marginLeft: '20px'
 }
 
+const sliderStyle = { width: '90%',  margin:'0 auto' };
+
+const deathIconStyle = {
+    color:'gray',
+}
+
+const deathStepStyle = {
+    marginLeft: -7,
+    marginTop: -5,
+    height:12,
+    width:12,
+    padding: 0,
+    margin: 0
+}
+
+const defaultStep = {
+    color:'green'
+}
+
+function log(value) {
+//  console.log(value); //eslint-disable-line
+}
+
 const HeroCard = ({data, fn, pic}) => {
-    let toggler = false;
-    
+//    let toggler = false;
 //    const processCheck = (value) => {
 //        console.log(value)
 //        fn(value);
 //    }
+//    const onCheck = (e) => {
+//      toggler = !toggler
+//    } 
+    let steps = {};
+    let defaultValue = null;
+    data.Might.map((item, index) => {
+        if(index === 0){
+            steps[index] = <IconButton style={deathStepStyle} iconStyle={deathIconStyle} tooltip="Death"><Healing/></IconButton>
+            
+        }else if(index === data.startingMight-1){
+            steps[index] = <strong style={defaultStep}>{item}</strong>
+            defaultValue = index;
+        } else
+            steps[index] = item;
+    });
 
-    const onCheck = (e) => {
-      toggler = !toggler
-    } 
     // TODO: this may need to be its own class, i think setting state is the reason why this wont update.
     return (
-        <Col xs={4} sm={2}>
+        <Col xs={6}>
             <img src={ pic } alt="" height="100" width="100" style={imgStyle}/>
             <p>{data.Name}</p>
             <p>Age: {data.Age}, Birthday: {data.Birthday}</p>
             <p>Weight: {data.Weight}, Height {data.Height}</p>
             <p>Hobbies: {data.Hobbies}</p>
-            <RaisedButton label={toggler ? 'Remove' : 'Select'} onClick={onCheck} />
+            
+            <div style={sliderStyle}>
+              <strong><p>Might</p></strong>
+              <Slider min={0} max={data.Might.length-1} step={null} marks={steps} onChange={log} defaultValue={data.startingMight-1} />
+            </div>
+            <br/>
         </Col>
     )
 }
