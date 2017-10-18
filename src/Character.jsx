@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-//import Paper from 'material-ui/Paper';
+import Paper from 'material-ui/Paper';
 //import { CardHeader } from 'material-ui/Card';
 import HeroData from './assets/HeroData.json';
 //import { Card } from 'material-ui/Card';
@@ -31,8 +31,13 @@ const imgStyle = {
     marginTop: '20px',
     marginLeft: '20px'
 }
-
-const sliderStyle = { width: '90%',  margin:'0 auto' };
+const sliderStyle = {
+    width: '90%',
+    margin: '0 auto',
+    color: '#efefef',
+    fontFamily: "'Nosifer', cursive",
+    fontSize:'1.3em'
+};
 
 const deathIconStyle = {
     color:'gray',
@@ -41,7 +46,6 @@ const deathIconStyle = {
 }
 
 const deathStepStyle = {
-
     height:15,
     width:15,
     padding: 0,
@@ -49,11 +53,15 @@ const deathStepStyle = {
 }
 
 const defaultStep = {
-    backgroundColor:'#eee'
+    color:'lightgreen'
 }
 
 function log(value) {
 //  console.log(value); //eslint-disable-line
+}
+
+const bloodtext = {
+    fontFamily: "'Nosifer', cursive"
 }
 
 let BuildSlider = ({statname, statlist, startingindex}) => {
@@ -62,14 +70,19 @@ let BuildSlider = ({statname, statlist, startingindex}) => {
         if(index === 0){
             marks[index] = <IconButton style={deathStepStyle} iconStyle={deathIconStyle}><Healing/></IconButton>
         }else if(index === startingindex){
-            marks[index] = <strong style={defaultStep}>{item}</strong>
+            marks[index] = <span style={defaultStep}>{item}</span>
         } else
             marks[index] = item;
     });
     return (
         <div style={sliderStyle}>
-            <strong><p>{statname}</p></strong>
-            <Slider min={0} max={statlist.length-1} step={null} marks={marks} defaultValue={startingindex} />
+            <p>{statname}</p>
+            <Slider min={0} max={statlist.length-1} step={null} marks={marks} defaultValue={startingindex} 
+                trackStyle={[{ backgroundColor: 'darkred' }, { borderColor: 'pink' }]}
+                railStyle={{ backgroundColor: 'black' }}
+                dotStyle={{ backgroundColor: 'black', borderColor:'gray' }}
+                activeDotStyle={{ backgroundColor: 'black',  borderColor:'gray'}}
+                handleStyle={{ backgroundColor: 'darkred',height: 15,width: 15,borderColor:'white' }} />
             <br/>
         </div>    
     )
@@ -89,6 +102,7 @@ const HeroCard = ({data, fn, pic}) => {
             <p>Age: {data.Age}, Birthday: {data.Birthday}</p>
             <p>Weight: {data.Weight}, Height {data.Height}</p>
             <p>Hobbies: {data.Hobbies}</p>
+            <hr/>
             <BuildSlider statname='Might' statlist={data.Might} startingindex={data.startingMight-1}/>
             <BuildSlider statname='Speed' statlist={data.Speed} startingindex={data.startingSpeed-1}/>
             <BuildSlider statname='Sanity' statlist={data.Sanity} startingindex={data.startingSanity-1}/>
@@ -113,9 +127,16 @@ const HeroList = ({data, fn}) => {
     })
     
     return(
+      <Paper>
         <Grid fluid style={bioStyle}>
             <Row>{nodes}</Row>
         </Grid>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+      </Paper>
     )
 }
 

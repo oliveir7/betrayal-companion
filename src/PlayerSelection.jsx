@@ -48,12 +48,13 @@ class PlayerSelection extends Component {
         }
     }
 
-
+//<p>{this.state.playerCount} Player(s) Selected</p>
   render() {
     return (
         <div>
-            <p>{this.state.playerCount} Player(s) Selected</p>
+            
             <AllCharacters callbackFromParent={this.updateCount}/>
+
         </div>
     );
   }
