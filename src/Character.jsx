@@ -36,65 +36,66 @@ const sliderStyle = { width: '90%',  margin:'0 auto' };
 
 const deathIconStyle = {
     color:'gray',
+    height:15,
+    width:15
 }
 
 const deathStepStyle = {
-    marginLeft: -7,
-    marginTop: -5,
-    height:12,
-    width:12,
+
+    height:15,
+    width:15,
     padding: 0,
     margin: 0
 }
 
 const defaultStep = {
-    color:'green'
+    backgroundColor:'#eee'
 }
 
 function log(value) {
 //  console.log(value); //eslint-disable-line
 }
 
-const HeroCard = ({data, fn, pic}) => {
-//    let toggler = false;
-//    const processCheck = (value) => {
-//        console.log(value)
-//        fn(value);
-//    }
-//    const onCheck = (e) => {
-//      toggler = !toggler
-//    } 
-    let steps = {};
-    let defaultValue = null;
-    data.Might.map((item, index) => {
+let BuildSlider = ({statname, statlist, startingindex}) => {
+    let marks = {};
+    statlist.map((item, index) => {
         if(index === 0){
-            steps[index] = <IconButton style={deathStepStyle} iconStyle={deathIconStyle} tooltip="Death"><Healing/></IconButton>
-            
-        }else if(index === data.startingMight-1){
-            steps[index] = <strong style={defaultStep}>{item}</strong>
-            defaultValue = index;
+            marks[index] = <IconButton style={deathStepStyle} iconStyle={deathIconStyle}><Healing/></IconButton>
+        }else if(index === startingindex){
+            marks[index] = <strong style={defaultStep}>{item}</strong>
         } else
-            steps[index] = item;
+            marks[index] = item;
     });
-
-    // TODO: this may need to be its own class, i think setting state is the reason why this wont update.
     return (
-        <Col xs={6}>
-            <img src={ pic } alt="" height="100" width="100" style={imgStyle}/>
-            <p>{data.Name}</p>
-            <p>Age: {data.Age}, Birthday: {data.Birthday}</p>
-            <p>Weight: {data.Weight}, Height {data.Height}</p>
-            <p>Hobbies: {data.Hobbies}</p>
-            
-            <div style={sliderStyle}>
-              <strong><p>Might</p></strong>
-              <Slider min={0} max={data.Might.length-1} step={null} marks={steps} onChange={log} defaultValue={data.startingMight-1} />
-            </div>
+        <div style={sliderStyle}>
+            <strong><p>{statname}</p></strong>
+            <Slider min={0} max={statlist.length-1} step={null} marks={marks} defaultValue={startingindex} />
             <br/>
-        </Col>
+        </div>    
     )
 }
 
+const HeroCard = ({data, fn, pic}) => {
+
+//    const speedSlider = buildSlider('Speed', data.Speed, data.startingSpeed);
+//    const sanitySlider = buildSlider('Sanity', data.Sanity, data.startingSanity);
+//    const knowledgeSlider = buildSlider('Knowledge', data.Knowledge, data.startingKnowledge);
+    
+    // TODO: this may need to be its own class, i think setting state is the reason why this wont update.
+    return (
+        <Col xs={2}>
+            <img src={ pic } alt="" height="100" width="100" style={imgStyle}/>
+            <p><strong>{data.Name}</strong></p>
+            <p>Age: {data.Age}, Birthday: {data.Birthday}</p>
+            <p>Weight: {data.Weight}, Height {data.Height}</p>
+            <p>Hobbies: {data.Hobbies}</p>
+            <BuildSlider statname='Might' statlist={data.Might} startingindex={data.startingMight-1}/>
+            <BuildSlider statname='Speed' statlist={data.Speed} startingindex={data.startingSpeed-1}/>
+            <BuildSlider statname='Sanity' statlist={data.Sanity} startingindex={data.startingSanity-1}/>
+            <BuildSlider statname='Knowledge' statlist={data.Knowledge} startingindex={data.startingKnowledge-1}/>
+        </Col>
+    )
+}
 
 const HeroList = ({data, fn}) => {
     // dynamically import all images in directory
