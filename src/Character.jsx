@@ -13,7 +13,9 @@ import Slider from 'rc-slider';
 import Healing from 'material-ui/svg-icons/image/healing';
 import IconButton from 'material-ui/IconButton';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-
+//import SelectField from 'material-ui/SelectField';
+//import MenuItem from 'material-ui/MenuItem';
+import Dropdown from './Dropdown.jsx'
 
 window.id=0;
 
@@ -95,8 +97,9 @@ const HeroCard = ({data, fn, pic}) => {
 //    const knowledgeSlider = buildSlider('Knowledge', data.Knowledge, data.startingKnowledge);
     
     // TODO: this may need to be its own class, i think setting state is the reason why this wont update.
+    // TODO: more visible feedback on the current value of the stat
     return (
-        <Col xs={2}>
+        <Col xs={12}>
             <img src={ pic } alt="" height="100" width="100" style={imgStyle}/>
             <p><strong>{data.Name}</strong></p>
             <p>Age: {data.Age}, Birthday: {data.Birthday}</p>
@@ -111,42 +114,47 @@ const HeroCard = ({data, fn, pic}) => {
     )
 }
 
-const HeroList = ({data, fn}) => {
+const importPics = (r) => {
     // dynamically import all images in directory
-    const importPics = (r) => {
-        let images = {};
-        r.keys().map((item, index) => {
-            images[item.replace('./', '')] = r(item);
-        });
-        return images;
-    }
-    let images = importPics(require.context('./assets', false, /\.(png)$/));
+    let images = {};
+    r.keys().map((item, index) => {
+        images[item.replace('./', '')] = r(item);
+    });
+    return images;
+}
+let images = importPics(require.context('./assets', false, /\.(png)$/));
 
+
+const HeroList = ({data, fn}) => {
+    
     const nodes = data.map((HeroData) => {
-        return(<HeroCard key={window.id++} data={HeroData} fn={fn} pic={images[HeroData.Name + '.png']} />);
-    })
+        return(
+            <Col xs={2} key={window.id++}>
+                
+                <HeroCard  data={HeroData} fn={fn} pic={images[HeroData.Name + '.png']} />
+            </Col>
+        );
+    });
     
     return(
       <Paper>
+        <Dropdown data={HeroData} images={images}/>
         <Grid fluid style={bioStyle}>
             <Row>{nodes}</Row>
         </Grid>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
       </Paper>
     )
 }
 
+
 class AllCharacters extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            images: []
-        };
-        this.HeroData = HeroData;
         this.callbackFromParent = props.callbackFromParent;
     }
     
@@ -156,8 +164,10 @@ class AllCharacters extends Component {
         
     render() {
       return (
-          
-            <HeroList data={this.HeroData} fn={this.callbackFromParent}/>
+          <div>
+            
+            <HeroList data={HeroData} fn={this.callbackFromParent}/>
+          </div>
       )
     }
 }
