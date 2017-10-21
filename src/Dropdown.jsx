@@ -9,6 +9,7 @@ class Dropdown extends Component {
     constructor(props) {
         super(props);
         this.images = props.images;
+        // add logic to check if certain menu items should be disabled..
         this.state = {
             // for each character in HeroData.json, generate a menuItem for the dropdown menu
             data: props.data.map((character) => {
