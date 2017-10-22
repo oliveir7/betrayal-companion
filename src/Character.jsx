@@ -91,12 +91,7 @@ let BuildSlider = ({statname, statlist, startingindex}) => {
 }
 
 const HeroCard = ({data, fn, pic}) => {
-
-//    const speedSlider = buildSlider('Speed', data.Speed, data.startingSpeed);
-//    const sanitySlider = buildSlider('Sanity', data.Sanity, data.startingSanity);
-//    const knowledgeSlider = buildSlider('Knowledge', data.Knowledge, data.startingKnowledge);
     
-    // TODO: this may need to be its own class, i think setting state is the reason why this wont update.
     // TODO: more visible feedback on the current value of the stat
     return (
         <Col xs={12}>
