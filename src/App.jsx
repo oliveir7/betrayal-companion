@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 //import logo from './logo.svg';
+import GameBanner from './assets/boardGameBanner.png';
 import './App.css';
 import 'rc-slider/assets/index.css';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
@@ -8,7 +9,19 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactPlayer from 'react-player';
 import PlayerSelection from './PlayerSelection';
+import PlayIcon from 'material-ui/svg-icons/av/play-arrow';
+import PauseIcon from 'material-ui/svg-icons/av/pause';
+import NextIcon from 'material-ui/svg-icons/av/skip-next';
+import IconButton from 'material-ui/IconButton';
 
+
+
+const musicPlayerStyle = {
+    position: 'absolute',
+    top: 35,
+    right: 20,
+    width: 210
+}
 class App extends Component {
     
 
@@ -64,18 +77,23 @@ class App extends Component {
         <MuiThemeProvider muiTheme={ getMuiTheme(darkBaseTheme) }>
             <div className="App">
                 <header className="App-header">
-                    <h1 className="App-title">Betrayal at the House on the Hill Companion App</h1>
-                    <RaisedButton label={ this.state.btnText } onClick={ this.handleClick.bind(this) }/>
-                    <RaisedButton label={ 'Next Song' } onClick={ this.nextSong.bind(this) }/>
-                    <p className="App-intro">
-                        { this.state.playing ? 'Now Playing...' + this.state.nowPlaying.name : null } 
-                    </p>
-                    <ReactPlayer 
-                        url={ this.state.nowPlaying.url } 
-                        playing={ this.state.playing } 
-                        height='0' width='0' 
-                        onEnded={this.nextSong.bind(this)}
-                    />
+                    <div style={musicPlayerStyle}>
+                        <RaisedButton icon={ this.state.playing ? <PauseIcon/> : <PlayIcon/>} onClick={ this.handleClick.bind(this) }/>
+                        <RaisedButton icon={<NextIcon/>} onClick={ this.nextSong.bind(this) }/>
+                        <p className="App-intro">
+                            { this.state.playing ? 'Playing: ' + this.state.nowPlaying.name : 'Paused: ' + this.state.nowPlaying.name} 
+                        </p>
+                        <ReactPlayer 
+                            url={ this.state.nowPlaying.url } 
+                            playing={ this.state.playing } 
+                            height='0' width='0' 
+                            onEnded={this.nextSong.bind(this)}
+                        />
+                    </div>
+                    
+                    <br/><img src={GameBanner} height='80'></img>
+                    <div className="App-title">Companion App</div>
+
                 </header>
 
                 <PlayerSelection />

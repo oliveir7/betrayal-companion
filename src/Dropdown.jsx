@@ -9,11 +9,15 @@ import Slider from 'rc-slider';
 import HeroData from './assets/HeroData.json';
 
 const bloodtext = {
-        
+    fontFamily: "'Nosifer', cursive",
+    fontSize: '1.4em',
+    color:'#d9232c',
+    textShadow: '0px 0px 8px black',
+    textAlign: 'left'
 }
 
 const defaultStep = {
-    color:'lightgreen',
+    color:'#cbca42', // the greenish yellow
     fontSize:'1.1em'
 }
 
@@ -23,7 +27,10 @@ const regularStep = {
 }
 
 const bioStyle = {
-    fontSize: '0.8em'
+    fontSize: '0.9em',
+    textAlign: 'right',
+    paddingTop: 5,
+    textShadow: '0px 0px 8px #000'
 }
 
 const sliderStyle = {
@@ -46,8 +53,9 @@ const deathStepStyle = {
 
 const dropdownStyle = {
     width: '80%',
-    marginTop: 30,
-    borderTop: '1px solid #777'
+    marginTop: 5,
+    marginBottom: 30
+//    borderTop: '1px solid #777'
 }
 
 const menuItemText = {
@@ -68,7 +76,7 @@ const menuItemStyle = {
 const headerTextStyle = {
     fontFamily: "'Archivo Black', sans-serif",
     fontSize: '1.6em',
-    textShadow: '0px 0px 15px #ccc'
+    textShadow: '0px 0px 15px #000'
 }
 
 const subTextStyle = {
@@ -89,13 +97,13 @@ const BuildSlider = ({statname, statlist, startingindex}) => {
     // TODO: more visible feedback on the current value of the stat
     return (
         <div style={sliderStyle}>
-            <p style={headerTextStyle}>{statname}</p>
+            <div style={bloodtext}>{statname}</div>
             <Slider min={0} max={statlist.length-1} step={null} marks={marks} defaultValue={startingindex} 
-                trackStyle={[ { backgroundColor: 'darkred' } ]}
+                trackStyle={[ { backgroundColor: '#cbca42' } ]}
                 railStyle={{ backgroundColor: 'black' }}
                 dotStyle={{ backgroundColor: 'black', borderColor:'gray' }}
                 activeDotStyle={{ backgroundColor: 'black',  borderColor:'gray' }}
-                handleStyle={{ backgroundColor: 'darkred', borderRadius:10, height: 40, width:15, borderColor:'white' }} />
+                handleStyle={{ backgroundColor: '#d9232c', borderRadius:10, height: 65, width:30, borderColor:'#717171', marginLeft:-14 }} />
             <br/>
             <br/>
             <br/>
@@ -106,17 +114,26 @@ const BuildSlider = ({statname, statlist, startingindex}) => {
 const HeroCard = ({ data , pic, total}) => {
     let width = (total <= 2) ? 4 : 12/total;
     const cardStyle = {
-        paddingLeft: 40,
-        paddingRight: 40
+        paddingLeft: 20,
+        paddingRight: 20
     }
 
     return (
         <Col xs={ width } style={cardStyle}>
-            <img src={pic} alt="" height="200" width="200" />
-            <p style={headerTextStyle}>{data.Name}</p>
-            <p>Age: {data.Age}, Birthday: {data.Birthday}</p>
-            <p>Weight: {data.Weight}, Height: {data.Height}</p>
-            <p>Hobbies: {data.Hobbies}</p>
+            <Row>
+                <Col xs={1}>
+                    <img src={pic} alt="" height="130" width="130" />
+                </Col>
+                <Col xs={11}>
+                    <Row style={bioStyle}>
+                        <Col xs={12} style={headerTextStyle}>{data.Name}</Col>
+                        <Col xs={12}>Age: {data.Age}</Col>
+                        <Col xs={12}>Birthday: {data.Birthday}</Col>
+                        <Col xs={12}>Weight: {data.Weight}, Height: {data.Height}</Col>
+                        <Col xs={12}>Hobbies: {data.Hobbies}</Col>
+                    </Row>
+                </Col>
+            </Row>
             <hr/>
             <BuildSlider statname='Might' statlist={data.Might} startingindex={data.startingMight-1}/>
             <BuildSlider statname='Speed' statlist={data.Speed} startingindex={data.startingSpeed-1}/>
@@ -130,7 +147,7 @@ const HeroCard = ({ data , pic, total}) => {
 const ActivePlayers = ({ nameArray, images }) => {
     
     if(typeof nameArray === 'undefined' || nameArray.length < 1)
-        return(<div>No Players Selected!</div>);
+        return(<div>No Players Selected!<br/><br/><br/><br/></div>);
     
     let list = [];
     let nodes = nameArray.map((name) => {
@@ -196,7 +213,7 @@ class Dropdown extends Component {
                         onChange={this.handleChange}  hintText="Select a character">
                 {this.state.data}
           </SelectField>
-            
+            <br/>
             <Grid fluid style={bioStyle}>
                 <ActivePlayers nameArray={this.state.selected} images={this.images}/>
             </Grid>
