@@ -9,28 +9,26 @@ import Slider from 'rc-slider';
 import HeroData from './assets/HeroData.json';
 
 const bloodtext = {
-    fontFamily: "'Nosifer', cursive"
+        
 }
 
 const defaultStep = {
-    color:'lightgreen'
+    color:'lightgreen',
+    fontSize:'1.1em'
+}
+
+const regularStep = {
+    color:'white',
+    fontSize:'1.1em'
 }
 
 const bioStyle = {
     fontSize: '0.8em'
 }
 
-const imgStyle = {
-    marginTop: '20px',
-    marginLeft: '20px'
-}
-
 const sliderStyle = {
     width: '90%',
-    margin: '0 auto',
-    color: '#efefef',
-    fontFamily: "'Nosifer', cursive",
-    fontSize:'1.3em'
+    margin: '0 auto'
 };
 
 const deathIconStyle = {
@@ -52,50 +50,79 @@ const dropdownStyle = {
     borderTop: '1px solid #777'
 }
 
-let BuildSlider = ({statname, statlist, startingindex}) => {
+const menuItemText = {
+    fontSize:'1.3em',
+    paddingLeft: 12
+}
+
+const menuItemPic = {
+    marginBottom: -12,
+    paddingTop: 12
+}
+
+const menuItemStyle = {
+    borderLeft: '1px solid #777',
+    borderRight: '1px solid #777'
+}
+
+const headerTextStyle = {
+    fontFamily: "'Archivo Black', sans-serif",
+    fontSize: '1.6em',
+    textShadow: '0px 0px 15px #ccc'
+}
+
+const subTextStyle = {
+    fontFamily: "'Archivo Black', sans-serif",
+    fontSize: '1em'
+}
+
+const BuildSlider = ({statname, statlist, startingindex}) => {
     let marks = {};
     statlist.map((item, index) => {
         if(index === 0){
             marks[index] = <IconButton style={deathStepStyle} iconStyle={deathIconStyle}><Healing/></IconButton>
         }else if(index === startingindex){
-            marks[index] = <span style={defaultStep}>{item}</span>
+            marks[index] = <span style={defaultStep}><u>{item}</u></span>
         } else
-            marks[index] = item;
+            marks[index] = <span style={regularStep}>{item}</span>;
     });
+    // TODO: more visible feedback on the current value of the stat
     return (
         <div style={sliderStyle}>
-            <p>{statname}</p>
+            <p style={headerTextStyle}>{statname}</p>
             <Slider min={0} max={statlist.length-1} step={null} marks={marks} defaultValue={startingindex} 
-                trackStyle={[{ backgroundColor: 'darkred' }, { borderColor: 'pink' }]}
+                trackStyle={[ { backgroundColor: 'darkred' } ]}
                 railStyle={{ backgroundColor: 'black' }}
                 dotStyle={{ backgroundColor: 'black', borderColor:'gray' }}
-                activeDotStyle={{ backgroundColor: 'black',  borderColor:'gray'}}
-                handleStyle={{ backgroundColor: 'darkred',height: 15,width: 15,borderColor:'white' }} />
+                activeDotStyle={{ backgroundColor: 'black',  borderColor:'gray' }}
+                handleStyle={{ backgroundColor: 'darkred', borderRadius:10, height: 40, width:15, borderColor:'white' }} />
+            <br/>
+            <br/>
             <br/>
         </div>    
     )
 }
 
 const HeroCard = ({ data , pic, total}) => {
+    let width = (total <= 2) ? 4 : 12/total;
+    const cardStyle = {
+        paddingLeft: 40,
+        paddingRight: 40
+    }
 
-//    const speedSlider = buildSlider('Speed', data.Speed, data.startingSpeed);
-//    const sanitySlider = buildSlider('Sanity', data.Sanity, data.startingSanity);
-//    const knowledgeSlider = buildSlider('Knowledge', data.Knowledge, data.startingKnowledge);
-    
-    // TODO: this may need to be its own class, i think setting state is the reason why this wont update.
-    // TODO: more visible feedback on the current value of the stat
     return (
-        <Col xs={ (12/total) }>
-            <img src={pic} alt="" height="100" width="100" style={imgStyle}/>
-            <p><strong>{data.Name}</strong></p>
+        <Col xs={ width } style={cardStyle}>
+            <img src={pic} alt="" height="200" width="200" />
+            <p style={headerTextStyle}>{data.Name}</p>
             <p>Age: {data.Age}, Birthday: {data.Birthday}</p>
-            <p>Weight: {data.Weight}, Height {data.Height}</p>
+            <p>Weight: {data.Weight}, Height: {data.Height}</p>
             <p>Hobbies: {data.Hobbies}</p>
             <hr/>
             <BuildSlider statname='Might' statlist={data.Might} startingindex={data.startingMight-1}/>
             <BuildSlider statname='Speed' statlist={data.Speed} startingindex={data.startingSpeed-1}/>
             <BuildSlider statname='Sanity' statlist={data.Sanity} startingindex={data.startingSanity-1}/>
             <BuildSlider statname='Knowledge' statlist={data.Knowledge} startingindex={data.startingKnowledge-1}/>
+            <br/>
         </Col>
     )
 }
@@ -137,8 +164,8 @@ class Dropdown extends Component {
             data: props.data.map((character) => {
               return(
                 <MenuItem key={window.id++} label={character.Name} value={character.Name}>
-                    <img src={this.images[character.Name + '.png']} alt="" height="35" width="35" />
-                    {character.Name}
+                    <img style={menuItemPic} src={this.images[character.Name + '.png']} alt="" height="45" width="45" /> 
+                    <span style={menuItemText}>{character.Name}</span>
                 </MenuItem>
               );
            })
@@ -165,7 +192,7 @@ class Dropdown extends Component {
         return (
         <Paper>
             <SelectField multiple={true} value={this.state.value} style={dropdownStyle}
-                        maxHeight={600}
+                        maxHeight={900} menuItemStyle={menuItemStyle}
                         onChange={this.handleChange}  hintText="Select a character">
                 {this.state.data}
           </SelectField>
