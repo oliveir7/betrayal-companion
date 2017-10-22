@@ -115,10 +115,6 @@ const ActivePlayers = ({ nameArray, images }) => {
                return temp;
            }
         });
-        
-        console.log(nameArray);
-        console.log(list);
-        console.log(nodes);
         return temp;
     });
     
@@ -160,7 +156,7 @@ class Dropdown extends Component {
 
     // event handler for SelectField updates
     handleChange = (event, index, value) => {
-        console.log(value);
+//        console.log(value);
         this.setState({value});
         this.setState({selected : value});
     }
