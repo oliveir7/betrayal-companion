@@ -1,15 +1,18 @@
-## Betrayal at House on the Hill - Companion Application
+## Betrayal at House on the Hill - Stat Tracker App
 
-This project is meant to compliment the board game [Betrayal at the House on the Hill](https://www.amazon.com/Betrayal-At-House-Hill-2nd/dp/B003HC9734). Display all players’ stats on your TV (or any other large screen device). Background music supplied by the Luigi's Mansion Dark Moon soundtrack.
+This project is meant to compliment the board game [Betrayal at the House on the Hill](https://www.amazon.com/Betrayal-At-House-Hill-2nd/dp/B003HC9734). Display all players’ stats on your TV (or any other large screen device). Stat tracking duties can be assigned to a player, similiar to assigning a 'banker' in Monopoly. Background music supplied by the Luigi's Mansion Dark Moon soundtrack.
+
+Try out the app [here](https://betrayal-companion.herokuapp.com/)
 
 # TODO
-- Add icons to music controls. Add 'back' button.
-- Add haunt counter. Include haunt roll chance percentage as well.
+- Add 'back' button to music controller.
+- Add omen counter (with haunt roll %).
 - Add new 'traitor' character. Import images and names of all possible traitors/monsters.
 - Add some of the more ominous tracks from Luigi's Mansion OST and automatically switch the song once the haunt has started.
+- Improve overall app styling and css organization.
 
 
-## Application Info
+## Project Info
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
