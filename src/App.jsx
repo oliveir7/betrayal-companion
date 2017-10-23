@@ -92,7 +92,7 @@ class App extends Component {
                     </div>
                     
                     <br/><img src={GameBanner} height='80'></img>
-                    <div className="App-title">Companion App</div>
+                    <div className="App-title">Stat Tracker</div>
 
                 </header>
 

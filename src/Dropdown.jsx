@@ -17,13 +17,15 @@ const bloodtext = {
 }
 
 const defaultStep = {
-    color:'#cbca42', // the greenish yellow
-    fontSize:'1.1em'
+    fontFamily: "'Archivo Black', sans-serif",
+    color:'rgba(203, 202, 66, 0.51)', // greenish yellow, 50% opacity
+    fontSize:'23px'
 }
 
 const regularStep = {
-    color:'white',
-    fontSize:'1.1em'
+    fontFamily: "'Archivo Black', sans-serif",
+    color:'gray',
+    fontSize:'23px'
 }
 
 const bioStyle = {
@@ -103,7 +105,7 @@ const BuildSlider = ({statname, statlist, startingindex}) => {
                 railStyle={{ backgroundColor: 'black' }}
                 dotStyle={{ backgroundColor: 'black', borderColor:'gray' }}
                 activeDotStyle={{ backgroundColor: 'black',  borderColor:'gray' }}
-                handleStyle={{ backgroundColor: '#d9232c', borderRadius:10, height: 65, width:30, borderColor:'#717171', marginLeft:-14 }} />
+                handleStyle={{ backgroundColor: 'rgba(128, 128, 128, 0.23)', borderRadius:"0px 0px 8px 8px", height: 65, width:30, borderColor:'#717171', marginLeft:-14 }} />
             <br/>
             <br/>
             <br/>
